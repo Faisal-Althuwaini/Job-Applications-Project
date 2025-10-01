@@ -37,9 +37,13 @@ public class ApplicationService {
         User user = userRepository.findByEmail(email).orElseThrow();
         Job job = jobRepository.findById(application.getJobId()).orElseThrow();
 
-       Application applicationSaved = ApplicationMapper.toEntity(application, user, job);
+        boolean alreadyApplied = applicationRepository.existsByUserIdAndJobId(user.getId(), job.getId());
+        if (alreadyApplied) {
+            throw new RuntimeException("User has already applied to this job.");
+        }
 
-       Application saved = applicationRepository.save(applicationSaved);
+        Application applicationSaved = ApplicationMapper.toEntity(application, user, job);
+        Application saved = applicationRepository.save(applicationSaved);
         return ApplicationMapper.toDTO(saved) ;
     }
 
@@ -51,6 +55,13 @@ public class ApplicationService {
 
         Application application = applicationRepository.findById(id).orElseThrow();
         return ApplicationMapper.AllResponseToDTO(application);
+    }
+
+    public boolean hasUserAppliedToJob(String userEmail, Long jobId) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return applicationRepository.existsByUserIdAndJobId(user.getId(), jobId);
     }
 
 

@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router'
 import { useJobDetail } from '../composables/useJobDetail'
 import { formatPostedDate } from '../utils/dateFormat'
 import { useAuthStore } from '../stores/auth'
+import { useHasAppliedQuery } from '../composables/useHasAppliedQuery'
 
 const route = useRoute()
 const jobId = route.params.id
@@ -18,6 +19,9 @@ const {
     isSubmitting,
     submitApplication,
 } = useJobDetail(jobId)
+
+const { data: hasApplied, isLoading: isChecking } = useHasAppliedQuery(jobId)
+
 </script>
 
 <template>
@@ -73,38 +77,51 @@ const {
                 </div>
             </div>
 
-            <div class="bg-sky-50 p-6 rounded-xl border border-sky-100">
-                <h2 class="text-lg font-semibold text-gray-800 mb-4">
-                    Apply for this job
-                </h2>
+            <!-- Application Section -->
+            <div class="mt-8">
+                <!-- If Authenticated -->
+                <div v-if="auth.isAuthenticated" class="bg-sky-50 p-6 rounded-xl border border-sky-100">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">
+                        Apply for this job
+                    </h2>
 
-                <div v-if="auth.isAuthenticated">
-                    <div class="mb-4">
-                        <label for="resumeUrl" class="block text-sm font-medium text-gray-700 mb-1">
-                            Resume URL
-                        </label>
-                        <input v-model="resumeUrl" id="resumeUrl" type="url" placeholder="https://your-resume.com"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400" />
+                    <div v-if="isChecking" class="text-gray-500">Checking application status...</div>
+
+                    <div v-else-if="hasApplied" class="text-green-600 font-medium">
+                        ✅ You have already applied to this job.
                     </div>
 
-                    <button :disabled="isSubmitting" @click="submitApplication"
-                        class="bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200">
-                        {{ isSubmitting ? 'Submitting...' : 'Submit Application' }}
-                    </button>
+                    <div v-else>
+                        <div class="mb-4">
+                            <label for="resumeUrl" class="block text-sm font-medium text-gray-700 mb-1">
+                                Resume URL
+                            </label>
+                            <input v-model="resumeUrl" id="resumeUrl" type="url" placeholder="https://your-resume.com"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400" />
+                        </div>
 
-                    <p v-if="successMessage" class="text-green-600 mt-4">
-                        {{ successMessage }}
-                    </p>
-                    <p v-if="errorMessage" class="text-red-600 mt-4">
-                        {{ errorMessage }}
-                    </p>
+                        <button :disabled="isSubmitting" @click="submitApplication"
+                            class="bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200">
+                            {{ isSubmitting ? 'Submitting...' : 'Submit Application' }}
+                        </button>
+
+                        <p v-if="successMessage" class="text-green-600 mt-4">{{ successMessage }}</p>
+                        <p v-if="errorMessage" class="text-red-600 mt-4">{{ errorMessage }}</p>
+                    </div>
                 </div>
 
-                <div v-else class="text-center text-sky-700 text-sm font-medium">
-                    Please <router-link to="/login" class="text-sky-600 underline hover:text-sky-800">log
-                        in</router-link> to apply for this job.
+                <!-- If NOT Authenticated -->
+                <div v-else class="text-center text-gray-600 mt-8 border border-yellow-100 bg-blue-50 p-6 rounded-xl">
+                    <p class="text-lg font-medium mb-2">You need to be logged in to apply for this job.</p>
+                    <p class="text-sm">
+                        <router-link to="/login" class="text-sky-600 font-semibold hover:underline">
+                            Click here to log in
+                        </router-link>
+                    </p>
                 </div>
             </div>
+
+
         </div>
     </div>
 </template>

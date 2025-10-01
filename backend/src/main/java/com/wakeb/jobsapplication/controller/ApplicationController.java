@@ -44,5 +44,12 @@ public class ApplicationController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> hasAppliedToJob(@RequestParam Long jobId) {
+        String email = Authentcation.getAuthenticatedEmail();
+        boolean hasApplied = applicationService.hasUserAppliedToJob(email, jobId);
+        return ResponseEntity.ok(hasApplied);
+    }
+
 
 }

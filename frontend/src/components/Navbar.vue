@@ -35,7 +35,7 @@ const navigateToLogin = () => {
                         </svg>
                     </div>
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-blue-400 bg-clip-text text-transparent">
-                        Careers
+                        HIRE
                     </h1>
                 </router-link>
          
@@ -80,7 +80,7 @@ const navigateToLogin = () => {
                     <!-- Show user info and logout if authenticated -->
                     <div v-if="authStore.isAuthenticated" class="flex items-center gap-3">
                         <span class="text-gray-700 font-medium">
-                            {{ authStore.user?.name || 'User' }}
+                            {{ authStore.user || 'User' }}
                         </span>
                         <button
                             @click="handleLogout"

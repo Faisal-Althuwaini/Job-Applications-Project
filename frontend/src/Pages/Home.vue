@@ -73,8 +73,8 @@ const handleApply = (jobId) => {
 
 
     <JopList v-else :jobs="jobs" :searchTerm="searchTerm" :selectedDepartment="selectedDepartment" :isLoading="isLoading" @apply="handleApply" />
-    <div v-if="error">
-      <p class="text-xl">Ops, something went wrong. please try again later.</p>
+    <div class="max-w-7xl mx-auto px-4 py-12 flex items-center justify-center" v-if="!jobs">
+      <p class="text-lg">Ops, something went wrong. please try again later.</p>
     </div>
     <AppFooter />
   </div>

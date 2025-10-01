@@ -27,32 +27,29 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-sky-50 to-blue-50 flex items-center justify-center px-4 py-12">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 py-12">
     <div class="max-w-md w-full">
-      <!-- Card -->
       <div class="bg-white rounded-2xl shadow-2xl p-8">
-        <!-- Header -->
         <div class="text-center mb-8">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-sky-400 to-blue-400 rounded-full mb-4">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-4">
             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </div>
-          <h2 class="text-3xl font-bold bg-gradient-to-r from-sky-400 to-blue-400 bg-clip-text text-transparent">
+          <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             Welcome Back
           </h2>
           <p class="text-gray-600 mt-2">Sign in to your account</p>
         </div>
 
-        <!-- Error Message -->
+      
         <div v-if="errorMessage" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
           <p class="text-red-600 text-sm">{{ errorMessage }}</p>
         </div>
 
-        <!-- Form -->
         <form @submit.prevent="handleLogin" class="space-y-6">
-          <!-- Email Input -->
+          
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
               Email Address
@@ -68,13 +65,13 @@ const handleLogin = async () => {
                 v-model="formData.email"
                 type="email"
                 required
-                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-sky-400 outline-none transition-all"
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
                 placeholder="Enter your email"
               />
             </div>
           </div>
 
-          <!-- Password Input -->
+         
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
               Password
@@ -91,17 +88,17 @@ const handleLogin = async () => {
                 v-model="formData.password"
                 type="password"
                 required
-                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-sky-400 outline-none transition-all"
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
                 placeholder="Enter your password"
               />
             </div>
           </div>
 
-          <!-- Submit Button -->
+      
           <button
             type="submit"
             :disabled="authStore.loading"
-            class="w-full bg-gradient-to-r from-sky-400 to-blue-400 text-white py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             <span v-if="!authStore.loading">Sign In</span>
             <span v-else class="flex items-center justify-center gap-2">
@@ -114,20 +111,20 @@ const handleLogin = async () => {
           </button>
         </form>
 
-        <!-- Footer -->
+       
         <div class="mt-6 text-center">
           <p class="text-gray-600">
             Don't have an account?
-            <router-link to="/register" class="text-sky-500 hover:text-sky-600 font-semibold">
+            <router-link to="/register" class="text-indigo-600 hover:text-indigo-700 font-semibold">
               Sign up
             </router-link>
           </p>
         </div>
       </div>
 
-      <!-- Back to Home -->
+    
       <div class="text-center mt-6">
-        <router-link to="/" class="text-gray-600 hover:text-sky-500 transition-colors inline-flex items-center gap-2">
+        <router-link to="/" class="text-gray-600 hover:text-indigo-600 transition-colors inline-flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path d="M19 12H5M12 19l-7-7 7-7"></path>
           </svg>

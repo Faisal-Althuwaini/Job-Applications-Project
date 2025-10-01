@@ -2,9 +2,8 @@
 import { computed } from 'vue';
 import JobCard from './JobCard.vue';
 
-// ✅ Make sure prop name is 'jobs' not 'jops'
 const props = defineProps({
-    jobs: {  // ← THIS MUST BE 'jobs' to match :jobs="jobs" in App.vue
+    jobs: {  
         type: Array,
         required: true
     },

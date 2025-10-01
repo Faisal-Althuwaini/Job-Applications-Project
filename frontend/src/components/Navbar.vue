@@ -41,7 +41,7 @@ const navigateToLogin = () => {
          
               
                 <nav class="hidden md:flex items-center space-x-1">
-                    <a href="#jobs" class="relative px-4 py-2 text-gray-700 hover:text-sky-500 font-medium transition-colors duration-200 group cursor-pointer">
+                    <router-link to="/" class="relative px-4 py-2 text-gray-700 hover:text-sky-500 font-medium transition-colors duration-200 group cursor-pointer">
                         <span class="relative z-10 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
@@ -50,9 +50,9 @@ const navigateToLogin = () => {
                             Jobs
                         </span>
                         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-sky-400 to-blue-400 group-hover:w-full transition-all duration-300"></span>
-                    </a>
+                    </router-link>
                     
-                    <a href="#about" class="relative px-4 py-2 text-gray-700 hover:text-sky-500 font-medium transition-colors duration-200 group cursor-pointer">
+                    <router-link to="/about" class="relative px-4 py-2 text-gray-700 hover:text-sky-500 font-medium transition-colors duration-200 group cursor-pointer">
                         <span class="relative z-10 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
@@ -62,9 +62,9 @@ const navigateToLogin = () => {
                             About
                         </span>
                         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-sky-400 to-blue-400 group-hover:w-full transition-all duration-300"></span>
-                    </a>
+                    </router-link>
                     
-                    <a href="#contact" class="relative px-4 py-2 text-gray-700 hover:text-sky-500 font-medium transition-colors duration-200 group cursor-pointer">
+                    <router-link to="/contact" class="relative px-4 py-2 text-gray-700 hover:text-sky-500 font-medium transition-colors duration-200 group cursor-pointer">
                         <span class="relative z-10 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -72,7 +72,7 @@ const navigateToLogin = () => {
                             Contact
                         </span>
                         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-sky-400 to-blue-400 group-hover:w-full transition-all duration-300"></span>
-                    </a>
+                    </router-link>
                 </nav>
 
 

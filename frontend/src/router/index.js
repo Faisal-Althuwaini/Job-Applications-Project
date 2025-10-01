@@ -3,6 +3,7 @@ import { useAuthStore } from '../stores/auth'
 import Home from '../Pages/Home.vue'
 import Login from '../Pages/Login.vue'
 import Register from '../Pages/Register.vue'
+import JobDetail from '../Pages/JobDetail.vue'
 
 const routes = [
   {
@@ -21,6 +22,12 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: { guest: true }
+  },
+  {
+    path: '/job/:id',
+    name: "Job",
+    component: JobDetail,
+    props: true
   }
 ]
 

@@ -28,7 +28,7 @@ public class AuthController {
             AuthResponse response = authService.login(loginRequest);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("اسم المستخدم أو كلمة المرور غير صحيحة");
+            return ResponseEntity.badRequest().body("Login credentials incorrect");
         }
     }
 

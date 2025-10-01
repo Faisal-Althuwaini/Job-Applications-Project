@@ -1,5 +1,4 @@
 <script setup>
-// JobCard only receives ONE job object, no filtering needed!
 defineProps({
     job: {
         type: Object,
@@ -11,35 +10,63 @@ const emit = defineEmits(['apply'])
 </script>
 
 <template>
-    <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <h4 class="text-2xl font-bold text-gray-900 mb-2">{{ job.title }}</h4>
-                <span class="inline-block bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">
-                    {{ job.department }}
-                </span>
+    <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-indigo-200 transform hover:-translate-y-1">
+        <!-- Header Section -->
+        <div class="flex justify-between items-start mb-5">
+            <div class="flex-1">
+                <h4 class="text-xl font-bold text-gray-900 mb-3 hover:text-indigo-600 transition-colors">
+                    {{ job.title }}
+                </h4>
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 px-3 py-1.5 rounded-full text-xs font-semibold">
+                       
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        {{ job.department }}
+                    </span>
+                </div>
             </div>
-            <button @click="emit('apply', job.id)"
-                class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition font-medium w-32 h-15">
-                Apply Now
+            
+            <button 
+                @click="emit('apply', job.id)"
+                class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center gap-2 whitespace-nowrap ml-4"
+            >
+                
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                Apply
             </button>
         </div>
 
-        <p class="text-gray-600 mb-4">{{ job.description }}</p>
+        
+        <p class="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-2">
+            {{ job.description }}
+        </p>
 
-        <div class="flex flex-wrap gap-4 text-sm text-gray-500">
-            <div class="flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+     
+        <div class="flex flex-wrap items-center gap-4 pt-4 border-t border-gray-100">
+          
+            <div class="flex items-center text-sm text-gray-500">
+                <svg class="w-4 h-4 mr-1.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                {{ job.location }}
+                <span class="font-medium">{{ job.location }}</span>
             </div>
-            <div class="ml-auto text-gray-400">
+
+          
+            <div class="flex items-center text-xs text-gray-400 ml-auto">
+                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
                 Posted {{ job.posted }}
             </div>
         </div>
     </div>
 </template>
+

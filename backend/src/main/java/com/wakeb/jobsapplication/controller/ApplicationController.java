@@ -1,10 +1,13 @@
 package com.wakeb.jobsapplication.controller;
 
+import com.wakeb.jobsapplication.dto.AllApplicationResponseDTO;
 import com.wakeb.jobsapplication.dto.ApplicationResponseDTO;
 import com.wakeb.jobsapplication.entity.Application;
 import com.wakeb.jobsapplication.service.ApplicationService;
+import com.wakeb.jobsapplication.utils.Authentcation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,20 +20,24 @@ public class ApplicationController {
     ApplicationService applicationService;
 
     @GetMapping()
-    public ResponseEntity<List<Application>> getAllApplications() {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<AllApplicationResponseDTO>> getAllApplications() {
         return ResponseEntity.ok(applicationService.getAllApplications());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{id}")
-    public ResponseEntity<Application> getApplicationById(@PathVariable Long id) {
+    public ResponseEntity<AllApplicationResponseDTO> getApplicationById(@PathVariable Long id) {
         return ResponseEntity.ok(applicationService.getApplicationById(id));
     }
 
     @PostMapping
-    public ResponseEntity<ApplicationResponseDTO> addApplication(@RequestBody ApplicationResponseDTO application) {
-        return ResponseEntity.ok(applicationService.addApplication(application));
+    public ResponseEntity<ApplicationResponseDTO> createApplication(@RequestBody ApplicationResponseDTO application) {
+        String email = Authentcation.getAuthenticatedEmail();
+        return ResponseEntity.ok(applicationService.addApplication(application, email));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteApplication(@PathVariable Long id) {
         applicationService.deleteApplication(id);

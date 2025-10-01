@@ -1,5 +1,6 @@
 package com.wakeb.jobsapplication.service;
 
+import com.wakeb.jobsapplication.dto.AllApplicationResponseDTO;
 import com.wakeb.jobsapplication.dto.ApplicationResponseDTO;
 import com.wakeb.jobsapplication.entity.Application;
 import com.wakeb.jobsapplication.entity.Job;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationService {
@@ -25,12 +27,14 @@ public class ApplicationService {
     UserRepository userRepository;
 
 
-    public List<Application> getAllApplications() {
-        return applicationRepository.findAll();
+    public List<AllApplicationResponseDTO> getAllApplications() {
+        List<Application> application = applicationRepository.findAll();
+        return application.stream().map(ApplicationMapper::AllResponseToDTO).toList();
     }
 
-    public ApplicationResponseDTO addApplication(ApplicationResponseDTO application) {
-        User user = userRepository.findById(application.getUserId()).orElseThrow();
+    public ApplicationResponseDTO addApplication(ApplicationResponseDTO application, String email) {
+
+        User user = userRepository.findByEmail(email).orElseThrow();
         Job job = jobRepository.findById(application.getJobId()).orElseThrow();
 
        Application applicationSaved = ApplicationMapper.toEntity(application, user, job);
@@ -43,8 +47,10 @@ public class ApplicationService {
         applicationRepository.deleteById(id);
     }
 
-    public Application getApplicationById(Long id) {
-        return applicationRepository.findById(id).orElseThrow();
+    public AllApplicationResponseDTO getApplicationById(Long id) {
+
+        Application application = applicationRepository.findById(id).orElseThrow();
+        return ApplicationMapper.AllResponseToDTO(application);
     }
 
 

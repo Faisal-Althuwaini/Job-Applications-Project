@@ -2,6 +2,9 @@ package com.wakeb.jobsapplication.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,5 +28,6 @@ public class Application {
 
     private String resumeUrl;
 
-    private LocalDateTime appliedAt;
+    @CreationTimestamp
+    private Instant appliedAt;
 }

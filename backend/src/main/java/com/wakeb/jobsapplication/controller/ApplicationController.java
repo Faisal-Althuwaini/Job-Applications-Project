@@ -1,5 +1,6 @@
 package com.wakeb.jobsapplication.controller;
 
+import com.wakeb.jobsapplication.dto.ApplicationResponseDTO;
 import com.wakeb.jobsapplication.entity.Application;
 import com.wakeb.jobsapplication.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("applications")
+@RestController()
+@RequestMapping("applications")
 public class ApplicationController {
 
     @Autowired
@@ -25,7 +27,7 @@ public class ApplicationController {
     }
 
     @PostMapping
-    public ResponseEntity<Application> addApplication(@RequestBody Application application) {
+    public ResponseEntity<ApplicationResponseDTO> addApplication(@RequestBody ApplicationResponseDTO application) {
         return ResponseEntity.ok(applicationService.addApplication(application));
     }
 

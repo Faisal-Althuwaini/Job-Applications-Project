@@ -14,34 +14,29 @@ const emit = defineEmits(['update:searchTerm', 'update:selectedDepartment'])
 </script>
 
 <template>
-    <div class="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white py-20 overflow-hidden">
-        <!-- Decorative background elements -->
+    <div class="relative bg-gradient-to-br from-sky-400 via-blue-400 to-cyan-400 text-white py-20 overflow-hidden">
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full filter blur-3xl"></div>
             <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full filter blur-3xl"></div>
         </div>
 
         <div class="relative max-w-6xl mx-auto px-4 text-center">
-            <!-- Heading Section -->
             <div class="mb-8">
                 <h2 class="text-6xl font-extrabold mb-4 animate-fade-in">
                     Find Your Dream Career
                 </h2>
-                <p class="text-xl text-indigo-100 font-light">
+                <p class="text-xl text-blue-100 font-light">
                     Join our team of innovators and make a real impact
                 </p>
             </div>
 
-            <!-- Search Bar Container -->
             <div class="max-w-4xl mx-auto">
                 <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-3">
                     <div class="flex flex-col md:flex-row gap-3">
-                        <!-- Search Input -->
                         <div class="flex-1 relative group">
                             <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                                <!-- Search Icon (Lucide) -->
                                 <svg 
-                                    class="w-5 h-5 text-gray-400 group-focus-within:text-indigo-600 transition-colors" 
+                                    class="w-5 h-5 text-gray-400 group-focus-within:text-sky-500 transition-colors" 
                                     fill="none" 
                                     stroke="currentColor" 
                                     viewBox="0 0 24 24"
@@ -56,16 +51,14 @@ const emit = defineEmits(['update:searchTerm', 'update:selectedDepartment'])
                                 placeholder="Search job titles, keywords..." 
                                 :value="searchTerm"
                                 @input="emit('update:searchTerm', $event.target.value)"
-                                class="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                                class="w-full pl-12 pr-4 py-3.5 border-2 border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-sky-400 focus:border-sky-400 outline-none transition-all"
                             />
                         </div>
 
-                        <!-- Department Select -->
                         <div class="relative md:w-64 group">
                             <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                                <!-- Filter Icon (Lucide) -->
                                 <svg 
-                                    class="w-5 h-5 text-gray-400 group-focus-within:text-indigo-600 transition-colors" 
+                                    class="w-5 h-5 text-gray-400 group-focus-within:text-sky-500 transition-colors" 
                                     fill="none" 
                                     stroke="currentColor" 
                                     viewBox="0 0 24 24"
@@ -77,7 +70,7 @@ const emit = defineEmits(['update:searchTerm', 'update:selectedDepartment'])
                             <select 
                                 :value="selectedDepartment" 
                                 @change="emit('update:selectedDepartment', $event.target.value)"
-                                class="w-full pl-12 pr-10 py-3.5 border-2 border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 appearance-none bg-white outline-none cursor-pointer transition-all font-medium"
+                                class="w-full pl-12 pr-10 py-3.5 border-2 border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-sky-400 focus:border-sky-400 appearance-none bg-white outline-none cursor-pointer transition-all font-medium"
                             >
                                 <option value="all">All Departments</option>
                                 <option value="Engineering">Engineering</option>
@@ -86,7 +79,6 @@ const emit = defineEmits(['update:searchTerm', 'update:selectedDepartment'])
                                 <option value="Marketing">Marketing</option>
                                 <option value="Sales">Sales</option>
                             </select>
-                            <!-- Chevron Down Icon -->
                             <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                                 <svg 
                                     class="w-5 h-5 text-gray-400" 
@@ -100,8 +92,7 @@ const emit = defineEmits(['update:searchTerm', 'update:selectedDepartment'])
                             </div>
                         </div>
 
-                        <!-- Search Button -->
-                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3.5 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2">
+                        <button class="bg-sky-500 hover:bg-sky-600 text-white px-8 py-3.5 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2">
                             <svg 
                                 class="w-5 h-5" 
                                 fill="none" 
@@ -117,7 +108,6 @@ const emit = defineEmits(['update:searchTerm', 'update:selectedDepartment'])
                     </div>
                 </div>
 
-                <!-- Quick Stats -->
                 <div class="mt-8 flex flex-wrap justify-center gap-8 text-sm">
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">

@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useJobDetail } from '../composables/useJobDetail'
 import { formatPostedDate } from '../utils/dateFormat'
 import { useAuthStore } from '../stores/auth'

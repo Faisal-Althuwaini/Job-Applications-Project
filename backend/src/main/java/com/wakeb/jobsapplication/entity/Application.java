@@ -8,7 +8,12 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "applications")
+@Table(name = "applications", indexes = {
+        @Index(name = "idx_app_user_id", columnList = "user_id"),
+        @Index(name = "idx_app_job_id", columnList = "job_id"),
+        @Index(name = "idx_app_user_job", columnList = "user_id, job_id", unique = true),
+        @Index(name = "idx_app_applied_at", columnList = "appliedAt")
+})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

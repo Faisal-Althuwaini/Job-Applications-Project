@@ -6,7 +6,7 @@ import java.time.Instant;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class Application {
+public class Application {
     private Long id;
     private User user;
     private Job job;

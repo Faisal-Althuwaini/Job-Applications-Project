@@ -45,6 +45,7 @@ public class ApplicationMapper {
         dto.setJob(jobDTO);
         dto.setResumeUrl(application.getResumeUrl());
         dto.setId(application.getId());
+        dto.setAppliedAt(application.getAppliedAt());
         return dto;
     }
 }

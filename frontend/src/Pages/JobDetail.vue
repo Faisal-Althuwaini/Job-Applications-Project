@@ -4,10 +4,12 @@ import { useJobDetail } from '../composables/useJobDetail'
 import { formatPostedDate } from '../utils/dateFormat'
 import { useAuthStore } from '../stores/auth'
 import { useHasAppliedQuery } from '../composables/useHasAppliedQuery'
+import { ref } from 'vue'
 
 const route = useRoute()
 const jobId = route.params.id
 const auth = useAuthStore()
+const selectedFile = ref(null)
 const {
     job,
     isLoading,
@@ -19,6 +21,19 @@ const {
     isSubmitting,
     submitApplication,
 } = useJobDetail(jobId)
+
+
+const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+        selectedFile.value = file
+    }
+}
+
+const onSubmit = () => {
+  submitApplication(selectedFile.value)
+}
+
 
 const { data: hasApplied, isLoading: isChecking } = useHasAppliedQuery(jobId)
 
@@ -93,14 +108,14 @@ const { data: hasApplied, isLoading: isChecking } = useHasAppliedQuery(jobId)
 
                     <div v-else>
                         <div class="mb-4">
-                            <label for="resumeUrl" class="block text-sm font-medium text-gray-700 mb-1">
-                                Resume URL
+                            <label for="resumeFile" class="block text-sm font-medium text-gray-700 mb-1">
+                                Upload Resume
                             </label>
-                            <input v-model="resumeUrl" id="resumeUrl" type="url" placeholder="https://your-resume.com"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400" />
+                            <input id="resumeFile" type="file" accept=".pdf,.doc,.docx" @change="handleFileChange"
+                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
                         </div>
 
-                        <button :disabled="isSubmitting" @click="submitApplication"
+                        <button :disabled="isSubmitting" @click="onSubmit"
                             class="bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200">
                             {{ isSubmitting ? 'Submitting...' : 'Submit Application' }}
                         </button>

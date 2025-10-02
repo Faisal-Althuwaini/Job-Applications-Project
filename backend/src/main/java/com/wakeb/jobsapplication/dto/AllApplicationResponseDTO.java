@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +15,5 @@ public class AllApplicationResponseDTO {
     private UserDTO user;
     private JobDTO job;
     private String resumeUrl;
+    private Instant appliedAt;
 }

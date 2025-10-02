@@ -1,12 +1,25 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axiosClient from '../api/axiosClient'
+import { jwtDecode } from 'jwt-decode'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref((localStorage.getItem('user')) || "User")
   const token = ref(localStorage.getItem('token') || null)
   const loading = ref(false)
   const error = ref(null)
+
+  const userRole = computed(() => {
+  if (!token.value) return null
+
+  try {
+    const decoded = jwtDecode(token.value)
+    return decoded.role || null
+  } catch (e) {
+    console.error('Invalid token:', e)
+    return null
+  }
+})
 
   // Getters
   const isAuthenticated = computed(() => !!token.value)
@@ -86,6 +99,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     isAuthenticated,
     currentUser,
+    userRole,
 
     login,
     register,

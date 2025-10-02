@@ -4,6 +4,10 @@ import Home from '../Pages/Home.vue'
 import Login from '../Pages/Login.vue'
 import Register from '../Pages/Register.vue'
 import JobDetail from '../Pages/JobDetail.vue'
+import AdminLayout from '../layouts/AdminLayout.vue'
+import JobsTable from '../Pages/admin/JobsTable.vue'
+import ApplicationsTable from '../Pages/admin/ApplicationsTable.vue'
+import UsersTable from '../Pages/admin/UsersTable.vue'
 
 const routes = [
   {
@@ -28,6 +32,31 @@ const routes = [
     name: "Job",
     component: JobDetail,
     props: true
+  },
+    {
+    path: '/admin',
+    component: AdminLayout,
+    children: [
+      {
+        path: '',
+        redirect: '/admin/jobs' // default tab
+      },
+      {
+        path: 'jobs',
+        name: 'AdminJobs',
+        component: JobsTable,
+      },
+      {
+        path: 'applications',
+        name: 'AdminApplications',
+        component: ApplicationsTable,
+      },
+      {
+        path: 'users',
+        name: 'AdminUsers',
+        component: UsersTable,
+      }
+    ]
   }
 ]
 
@@ -39,6 +68,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
+
+    if (to.path.startsWith('/admin') && (!authStore.isAuthenticated || authStore.userRole !== 'ADMIN')) {
+    return next('/')
+  }
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/login')

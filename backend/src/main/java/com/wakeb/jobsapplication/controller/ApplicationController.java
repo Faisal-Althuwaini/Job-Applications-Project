@@ -1,14 +1,17 @@
 package com.wakeb.jobsapplication.controller;
 
 import com.wakeb.jobsapplication.dto.AllApplicationResponseDTO;
+import com.wakeb.jobsapplication.dto.ApplicationRequestDTO;
 import com.wakeb.jobsapplication.dto.ApplicationResponseDTO;
 import com.wakeb.jobsapplication.entity.Application;
 import com.wakeb.jobsapplication.service.ApplicationService;
+import com.wakeb.jobsapplication.service.S3Service;
 import com.wakeb.jobsapplication.utils.Authentcation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +21,10 @@ public class ApplicationController {
 
     @Autowired
     ApplicationService applicationService;
+
+    @Autowired
+    S3Service s3Service;
+
 
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN')")
@@ -32,9 +39,22 @@ public class ApplicationController {
     }
 
     @PostMapping
-    public ResponseEntity<ApplicationResponseDTO> createApplication(@RequestBody ApplicationResponseDTO application) {
+    public ResponseEntity<ApplicationResponseDTO> createApplication(
+            @RequestPart("applicationData") ApplicationRequestDTO applicationData,
+            @RequestPart("resumeFile") MultipartFile resumeFile) {
+
         String email = Authentcation.getAuthenticatedEmail();
-        return ResponseEntity.ok(applicationService.addApplication(application, email));
+        System.out.println("applicationData: " + applicationData);
+        System.out.println("File name: " + resumeFile.getOriginalFilename());
+
+        String resumeUrl = s3Service.uploadFile(resumeFile);
+
+
+        ApplicationResponseDTO responseDTO = new ApplicationResponseDTO();
+        responseDTO.setJobId(applicationData.getJobId());
+        responseDTO.setResumeUrl(resumeUrl);
+
+        return ResponseEntity.ok(applicationService.addApplication(responseDTO, email));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

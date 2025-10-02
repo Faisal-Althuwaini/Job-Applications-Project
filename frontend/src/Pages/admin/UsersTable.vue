@@ -2,10 +2,11 @@
 import { ref } from 'vue';
 import { useUsers } from '../../composables/useUsers';
 import { useDeleteUser } from '../../composables/useDeleteUser';
+import { useChangeRole } from '../../composables/useChangeRole';
 
 const { data: users, isLoading, error } = useUsers();
 const { mutate: deleteUserMutation, isPending } = useDeleteUser()
-
+const {mutate: changeRole, isPendingRole} = useChangeRole() 
 const showUserModal = ref(false);
 const selectedUser = ref(null);
 
@@ -18,6 +19,11 @@ function closeUserModal() {
 function deleteUser(email) {
     if (!confirm('Are you sure you want to delete this user?')) return
     deleteUserMutation(email)
+}
+
+function handleRoleChange(email,role) {
+    
+    changeRole({email,role})
 }
 </script>
 
@@ -124,10 +130,12 @@ function deleteUser(email) {
                                 {{ user.email || 'N/A' }}
                             </td>
                             <td class="px-6 py-4">
-                                <span
-                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700">
-                                    {{ user.role || 'User' }}
-                                </span>
+                                <select
+                                    class="text-sm bg-white border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                                    :value="user.role"  @change="handleRoleChange(user.email, $event.target.value)">
+                                    <option value="USER">User</option>
+                                    <option value="ADMIN">Admin</option>
+                                </select>
                             </td>
 
                             <td class="px-6 py-4">
@@ -166,46 +174,5 @@ function deleteUser(email) {
             </div>
         </div>
 
-        <!-- User Modal -->
-        <div v-if="showUserModal && selectedUser"
-            class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"
-            @click.self="closeUserModal">
-            <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-semibold text-gray-900">User Details</h3>
-                    <button class="text-gray-500 hover:text-gray-900 transition" @click="closeUserModal"
-                        aria-label="Close">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="text-lg font-semibold text-sky-600 mb-2">Name</h4>
-                        <p class="text-gray-800">{{ selectedUser.name }}</p>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-semibold text-sky-600 mb-2">Email</h4>
-                        <p class="text-gray-800">{{ selectedUser.email }}</p>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-semibold text-sky-600 mb-2">Role</h4>
-                        <p class="text-gray-800">{{ selectedUser.role }}</p>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-semibold text-sky-600 mb-2">Joined</h4>
-                        <p class="text-gray-800">{{ new Date(selectedUser.joinedAt ||
-                            selectedUser.createdAt).toLocaleDateString() }}</p>
-                    </div>
-                    <div class="md:col-span-2">
-                        <h4 class="text-lg font-semibold text-sky-600 mb-2">About</h4>
-                        <p class="text-gray-700 whitespace-pre-line">{{ selectedUser.about || 'No description provided.'
-                            }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>

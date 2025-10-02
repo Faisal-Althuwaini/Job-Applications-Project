@@ -226,8 +226,15 @@ public class Login {
                 AuthResponse authResponse = apiService.login(email, password);
 
                 javafx.application.Platform.runLater(() -> {
-                    if (!"ADMIN".equals(authResponse.getUser().getRole())) {
-                        showError("Access denied. Admin only.");
+                    System.out.println("=== LOGIN DEBUG ===");
+                    System.out.println("User Name: " + authResponse.getUser().getName());
+                    System.out.println("User Email: " + authResponse.getUser().getEmail());
+                    System.out.println("User Role: '" + authResponse.getUser().getRole() + "'");
+                    System.out.println("==================");
+
+                    String userRole = authResponse.getUser().getRole();
+                    if (userRole == null || !userRole.equals("ADMIN")) {
+                        showError("Access denied. Admin only. Your role: '" + userRole + "'");
                         resetLoginButton();
                     } else {
                         navigateToDashboard();

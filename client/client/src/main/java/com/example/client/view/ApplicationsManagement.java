@@ -178,14 +178,26 @@ public class ApplicationsManagement extends VBox {
     }
 
     private void loadApplications() {
+        System.out.println("=== LOADING APPLICATIONS ===");
         new Thread(() -> {
             try {
                 var applications = apiService.getAllApplications();
+                System.out.println("Received " + applications.size() + " applications from backend");
+
+                for (Application app : applications) {
+                    System.out.println("App ID: " + app.getId() +
+                                     ", User: " + (app.getUser() != null ? app.getUser().getName() : "null") +
+                                     ", Job: " + (app.getJob() != null ? app.getJob().getTitle() : "null"));
+                }
+
                 javafx.application.Platform.runLater(() -> {
                     applicationsList.clear();
                     applicationsList.addAll(applications);
+                    System.out.println("Table now has " + applicationsList.size() + " items");
                 });
             } catch (IOException e) {
+                System.err.println("ERROR loading applications: " + e.getMessage());
+                e.printStackTrace();
                 javafx.application.Platform.runLater(() ->
                         showAlert("Error", "Failed to load applications: " + e.getMessage(), Alert.AlertType.ERROR)
                 );

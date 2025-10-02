@@ -10,10 +10,10 @@ public class Job {
     private String description;
     private String location;
     private String department;
-
+    
     @JsonProperty("postedAt")
     private Instant postedAt;
-
+    
     @JsonProperty("postedBy")
     private User postedBy;
 

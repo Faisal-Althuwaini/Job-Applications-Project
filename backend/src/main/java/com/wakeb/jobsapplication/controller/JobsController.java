@@ -1,9 +1,9 @@
 package com.wakeb.jobsapplication.controller;
 
 import com.wakeb.jobsapplication.dto.JobDTO;
-import com.wakeb.jobsapplication.entity.Job;
 import com.wakeb.jobsapplication.service.JobService;
 import com.wakeb.jobsapplication.utils.Authentcation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/jobs")
+@SecurityRequirement(name = "bearerAuth")
 public class JobsController {
     @Autowired
     JobService jobService;
@@ -24,7 +25,7 @@ public class JobsController {
 
     @GetMapping("{id}")
     public ResponseEntity<JobDTO> getJobById(@PathVariable Long id) {
-        return ResponseEntity.ok(jobService.getJobById(String.valueOf(id)));
+        return ResponseEntity.ok(jobService.getJobById(id));
     }
 
     @PostMapping
@@ -35,8 +36,9 @@ public class JobsController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteJob(@PathVariable Long id) {
-        jobService.deleteJob(String.valueOf(id));
+        jobService.deleteByJobId(id);
         return ResponseEntity.ok().body("Job deleted successfully");
     }
 }

@@ -36,9 +36,8 @@ public class ApplicationMapper {
 
     public static AllApplicationResponseDTO AllResponseToDTO(Application application) {
         AllApplicationResponseDTO dto = new AllApplicationResponseDTO();
-        UserMapper userMapper = new UserMapper();
 
-        UserDTO convertedUser = userMapper.toUserDTO(application.getUser());
+        UserDTO convertedUser = UserMapper.toDTO(application.getUser());
         dto.setUser(convertedUser);
 
         JobDTO jobDTO = JobMapper.toDTO(application.getJob());

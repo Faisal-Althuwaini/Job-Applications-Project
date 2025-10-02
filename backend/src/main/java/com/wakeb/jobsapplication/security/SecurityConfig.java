@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-resources/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/jobs/**").permitAll()
+                        .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/applications").permitAll()
 
                         .anyRequest().authenticated()

@@ -6,12 +6,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-    public UserDTO toUserDTO(User user) {
-        if (user == null) return null;
+    public static User toEntity(UserDTO dto) {
+        User user = new User();
+        user.setId(dto.getId());
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        return user;
+    }
 
-        return new UserDTO(
-                user.getName(),
-                user.getEmail()
-        );
+    public static UserDTO toDTO(User user) {
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole());
+        dto.setDeleteAt(user.getDeletedAt());
+        return dto;
     }
 }

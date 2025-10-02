@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ApplicationService {
@@ -35,7 +34,7 @@ public class ApplicationService {
     public ApplicationResponseDTO addApplication(ApplicationResponseDTO application, String email) {
 
         User user = userRepository.findByEmail(email).orElseThrow();
-        Job job = jobRepository.findById(application.getJobId()).orElseThrow();
+        Job job = jobRepository.findByJobId(application.getJobId());
 
         boolean alreadyApplied = applicationRepository.existsByUserIdAndJobId(user.getId(), job.getId());
         if (alreadyApplied) {

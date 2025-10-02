@@ -3,10 +3,10 @@ package com.wakeb.jobsapplication.controller;
 import com.wakeb.jobsapplication.dto.AllApplicationResponseDTO;
 import com.wakeb.jobsapplication.dto.ApplicationRequestDTO;
 import com.wakeb.jobsapplication.dto.ApplicationResponseDTO;
-import com.wakeb.jobsapplication.entity.Application;
 import com.wakeb.jobsapplication.service.ApplicationService;
 import com.wakeb.jobsapplication.service.S3Service;
 import com.wakeb.jobsapplication.utils.Authentcation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("applications")
+@SecurityRequirement(name = "bearerAuth")
 public class ApplicationController {
 
     @Autowired

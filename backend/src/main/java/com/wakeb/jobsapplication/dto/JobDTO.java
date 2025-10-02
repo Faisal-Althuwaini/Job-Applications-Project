@@ -1,11 +1,8 @@
 package com.wakeb.jobsapplication.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
@@ -24,5 +21,7 @@ public class JobDTO {
     private String department;
 
     private Instant postedAt;
+
+    private Instant deletedAt;
 
 }

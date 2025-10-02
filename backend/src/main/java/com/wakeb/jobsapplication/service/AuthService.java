@@ -13,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 
 @Service
@@ -38,9 +36,6 @@ public class AuthService {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
-
-    @Autowired
-    private UserMapper userMapper;
 
     public AuthResponse login(LoginRequest loginRequest) {
         return roleLogin(loginRequest, null);
@@ -65,7 +60,7 @@ public class AuthService {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         final String token = jwtUtil.generateToken(userDetails);
 
-        UserDTO userDTO = userMapper.toUserDTO(user);
+        UserDTO userDTO = UserMapper.toDTO(user);
         return new AuthResponse(token, userDTO);
     }
 
@@ -87,7 +82,7 @@ public class AuthService {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(savedUser.getEmail());
         final String token = jwtUtil.generateToken(userDetails);
 
-        UserDTO userDTO = userMapper.toUserDTO(savedUser);
+        UserDTO userDTO = UserMapper.toDTO(savedUser);
 
         return new AuthResponse(token, userDTO);
     }

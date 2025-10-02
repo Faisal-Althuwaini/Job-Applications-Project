@@ -34,4 +34,22 @@ public class UserService {
         Optional<User> user = userRepository.findByEmail(email);
         user.ifPresent(value -> userRepository.deleteByEmail(user.get().getEmail()));
     }
+
+    @Transactional
+    public UserDTO updateUserRole(String email, String newRole) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("User not found with email: " + email);
+        }
+
+        User user = userOptional.get();
+        if (!newRole.equals("ADMIN") && !newRole.equals("USER")) {
+            throw new IllegalArgumentException("Invalid role. Only 'ADMIN' or 'USER' are allowed");
+        }
+
+        user.setRole(newRole);
+        User updatedUser = userRepository.save(user);
+        return UserMapper.toDTO(updatedUser);
+    }
 }

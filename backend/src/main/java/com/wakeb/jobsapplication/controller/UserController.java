@@ -1,14 +1,23 @@
 package com.wakeb.jobsapplication.controller;
 
-import com.wakeb.jobsapplication.dto.UserDTO;
-import com.wakeb.jobsapplication.service.UserService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.wakeb.jobsapplication.dto.UpdateRoleRequest;
+import com.wakeb.jobsapplication.dto.UserDTO;
+import com.wakeb.jobsapplication.service.UserService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/users")
@@ -34,5 +43,13 @@ class UserController {
 
         userService.deleteUserByEmail(email);
         return ResponseEntity.ok().body("User deleted successfully");
+    }
+
+    @PatchMapping("{email}/role")
+    public ResponseEntity<UserDTO> updateUserRole(
+            @PathVariable String email,
+            @RequestBody UpdateRoleRequest updateRoleRequest) {
+        UserDTO updatedUser = userService.updateUserRole(email, updateRoleRequest.getRole());
+        return ResponseEntity.ok(updatedUser);
     }
 }

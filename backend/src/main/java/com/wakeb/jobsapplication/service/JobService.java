@@ -44,8 +44,15 @@ public class JobService {
         return JobMapper.toDTO(savedJob);
     }
 
-    public Job updateJob(Job job) {
-        return jobRepository.save(job);
+    public JobDTO updateJob(Job job, Long id) {
+        Job existingJob = jobRepository.findByJobId(id);
+
+        existingJob.setTitle(job.getTitle());
+        existingJob.setDepartment(job.getDepartment());
+        existingJob.setLocation(job.getLocation());
+        existingJob.setDescription(job.getDescription());
+        jobRepository.save(existingJob);
+        return  JobMapper.toDTO(existingJob);
     }
 
     @Transactional

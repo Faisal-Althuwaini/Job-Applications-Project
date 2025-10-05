@@ -1,6 +1,7 @@
 package com.wakeb.jobsapplication.controller;
 
 import com.wakeb.jobsapplication.dto.JobDTO;
+import com.wakeb.jobsapplication.entity.Job;
 import com.wakeb.jobsapplication.service.JobService;
 import com.wakeb.jobsapplication.utils.Authentcation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -40,5 +41,12 @@ public class JobsController {
     public ResponseEntity<String> deleteJob(@PathVariable Long id) {
         jobService.deleteByJobId(id);
         return ResponseEntity.ok().body("Job deleted successfully");
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<JobDTO> updateJob(@RequestBody Job job, @PathVariable Long id) {
+
+        JobDTO updateJob = jobService.updateJob(job, id);
+        return ResponseEntity.ok(updateJob);
     }
 }
